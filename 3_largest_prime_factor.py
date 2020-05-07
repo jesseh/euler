@@ -1,23 +1,35 @@
 
+def list_factors(targ):
+    """List all the factors for the target"""
+    print(f"Finding factors of {targ}.")
 
-def lpf(targ):
     i = 2
     factor_list = []
+    if targ % 2 == 0:
+        factor = targ // 2
+        factor_list.append(factor)
+        factor_list.append(2)
+        print(f"-> {factor} * {2}")
+    denominator = (x for x in range(3,targ // 2, 2) if x%5)
+    for x in denominator:
+        if targ % x == 0:
+            factor = targ // x
+            factor_list.append(factor)
+            factor_list.append(x)
+            print(f"-> {factor} * {x}")
+            if x > factor:
+                break
+    return sorted(factor_list, reverse=True)
 
-    # Find all the factors of the target
-    print(f"Finding factors of {targ}.")
-    while True:
-        if targ % i == 0:
-            factor_list.append(targ // i)
-        if i >= targ // 2:
-            break
-        i = i + 1
+
+def lowest_prime_factor(targ):
+    factor_list = list_factors(targ)
     print(f"The factor list is {factor_list}")
 
     # Pull out the prime factors
     print(f"Finding prime factors of {targ}.")
-    focus_index = 0
     max_index = len(factor_list)
+    focus_index = 0
     while focus_index < max_index:
         check_index = focus_index + 1
         while check_index < max_index:
@@ -31,14 +43,15 @@ def lpf(targ):
                 return focus
         focus_index = focus_index + 1
     print("Error - no prime factors found")
+    print("----------")
 
 
 target = 80
-print(f"The largest prime factor of target: {target} is: {lpf(target)}")
+print(f"The largest prime factor of target: {target} is: {lowest_prime_factor(target)}")
 print(f"EXPECT: the largest prime factor of target: 80 is: 5")
 target = 13195
-print(f"The largest prime factor of target: {target} is: {lpf(target)}")
+print(f"The largest prime factor of target: {target} is: {lowest_prime_factor(target)}")
 print(f"EXPECT: the largest prime factor of target: 13195 is: 29")
 target = 600851475143
-print(f"The largest prime factor of target: {target} is: {lpf(target)}")
+print(f"The largest prime factor of target: {target} is: {lowest_prime_factor(target)}")
 
